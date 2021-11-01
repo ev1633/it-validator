@@ -1,6 +1,6 @@
 {
   "name": "it-validator",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "input validation library",
   "publishConfig": {
     "registry": "https://registry.npmjs.org",
