@@ -1,8 +1,8 @@
 # it-validator
 
 ## The it-validator is an async validation library designed to make request validations easier
-- [How to use it?]
-- [Available methods]
+- [How to use it?](#how-to-use-it?)
+- [Available methods](#available-methods)
 
 
 
