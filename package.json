@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:com:ev1633/it-validator.git"
+    "url": "git@github.com:ev1633/it-validator.git"
   },
   "main": "dist/it-validator.js",
   "module": "dist/it-validator.mjs",
