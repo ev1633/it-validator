@@ -1,0 +1,10 @@
+.vscode
+node_modules
+.history
+.env*
+env.json
+logs.log
+*.zip
+dist
+_bak
+server

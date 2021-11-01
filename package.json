@@ -1,0 +1,46 @@
+{
+  "name": "it-validator",
+  "version": "1.0.0",
+  "description": "input validation library",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:com:ev1633/it-validator.git"
+  },
+  "main": "dist/it-validator.js",
+  "module": "dist/it-validator.mjs",
+  "typings": "dist/it-validator.d.ts",
+  "files": [
+    "dist/*"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\"",
+    "dev": "NODE_ENV=development nodemon",
+    "build": "rimraf ./dist && rollup -c"
+  },
+  "author": "Ezequiel Vergara",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/com:ev1633/it-validator/issues"
+  },
+  "homepage": "https://github.com/com:ev1633/it-validator#readme",
+  "devDependencies": {
+    "@types/node": "^15.12.2",
+    "@types/validator": "^13.1.4",
+    "dotenv": "^8.2.0",
+    "esbuild": "^0.12.28",
+    "eslint": "^7.14.0",
+    "eslint-config-prettier": "^6.15.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "nodemon": "^2.0.7",
+    "prettier": "^2.2.0",
+    "rimraf": "^3.0.2",
+    "rollup": "^2.56.3",
+    "rollup-plugin-dts": "^4.0.0",
+    "rollup-plugin-esbuild": "^4.5.0",
+    "ts-node": "^10.0.0",
+    "typescript": "^4.3.2"
+  }
+}

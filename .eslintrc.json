@@ -1,0 +1,46 @@
+{
+  "env": {
+    "browser": true,
+    "commonjs": true,
+    "es2021": true
+  },
+  "extends": [
+    "prettier",
+    "eslint:recommended"
+  ],
+  "plugins": [
+    "prettier"
+  ],
+  "parserOptions": {
+    "ecmaVersion": 12
+  },
+  "rules": {
+    "no-console": "off",
+    "no-debugger": "off",
+    "no-unexpected-multiline": "warn",
+    "prefer-const": "error",
+    "no-unused-vars": "warn",
+    "no-duplicate-imports": 2,
+    "function-call-argument-newline": [
+      "error",
+      "consistent"
+    ],
+    "linebreak-style": [
+      "error",
+      "unix"
+    ],
+    // "prettier/prettier": [
+    //   "warn",
+    //   {}
+    // ],
+    // "indent": [
+    //   "error",
+    //   2
+    // ],
+    // "space-before-function-paren": [
+    //   "error",
+    //   "never"
+    // ],
+    "no-useless-concat": "error"
+  }
+}
