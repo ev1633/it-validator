@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "input validation library",
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com/",
+    "registry": "https://registry.npmjs.org",
     "access": "public"
   },
   "repository": {
