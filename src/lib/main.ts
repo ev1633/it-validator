@@ -40,13 +40,13 @@ export const validateField = async (values: GenericObject, rule: Validator.Rule)
       return { err: errorMessage(rule.message, 'type', `value ${value} doesn't match the type ${validType.type}`), value }
 
     if (invalidAlpha(rule, value))
-      return { err: errorMessage(rule.message, 'alpha', `value ${value} must be entirely of alphabetic characters`), value }
+      return { err: errorMessage(rule.message, 'alpha', `value ${value} must contain alphabetic characters only`), value }
 
     if (invalidAlphaNum(rule, value))
-      return { err: errorMessage(rule.message, 'alphaNum', `value ${value} must be entirely of alphanumeric characters`), value }
+      return { err: errorMessage(rule.message, 'alphaNum', `value ${value} must contain alphanumeric characters only`), value }
 
     if (invalidAlphaDash(rule, value))
-      return { err: errorMessage(rule.message, 'alphaDash', `value ${value} must be entirely of alphanumeric characters, dashes or undescores`), value }
+      return { err: errorMessage(rule.message, 'alphaDash', `value ${value} must contain alphanumeric characters, dashes or undescores only`), value }
 
     if (invalidEmail(rule, value))
       return { err: errorMessage(rule.message, 'email', `value ${value} must be a valid email`), value }
@@ -65,7 +65,7 @@ export const validateField = async (values: GenericObject, rule: Validator.Rule)
   }
 
   if (rule.validate) {
-    const validateError = rule.validate(value)
+    const validateError = await rule.validate(value)
     if (validateError)
       return { err: errorMessage(rule.message, 'validate', `${validateError}`), value }
   }

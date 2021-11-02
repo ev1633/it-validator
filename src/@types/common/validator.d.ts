@@ -10,6 +10,7 @@ namespace Validator {
     type?: ValidationType,
     min?: number,
     max?: number,
+    email?: boolean,
     in?: (string | number)[],
     regex?: RegExp,
     requiredIf?: [string, any],
@@ -17,15 +18,15 @@ namespace Validator {
     requiredWith?: string[],
     requiredWithout?: string[],
     requiredWithoutAll?: string[],
+    alpha?: boolean,
+    alphaNum?: boolean,
+    alphaDash?: boolean,
     validate?: Function,
     default?: any,
     defaultAfterValidate?: any,
     children?: [] | GenericObject,
     clean?: { sanitize?: boolean, trim?: boolean },
     message?: string,
-    alpha?: boolean,
-    alphaNum?: boolean,
-    alphaDash?: boolean,
-    email?: boolean,
+
   } | null
 }
