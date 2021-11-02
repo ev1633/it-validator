@@ -24,9 +24,9 @@
   "author": "Ezequiel Vergara",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/com:ev1633/it-validator/issues"
+    "url": "https://github.com/ev1633/it-validator/issues"
   },
-  "homepage": "https://github.com/com:ev1633/it-validator#readme",
+  "homepage": "https://github.com/ev1633/it-validator#readme",
   "devDependencies": {
     "@types/node": "^15.12.2",
     "@types/validator": "^13.1.4",

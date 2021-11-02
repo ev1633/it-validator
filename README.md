@@ -1,7 +1,7 @@
 # it-validator
 
 ## _DISCLAIMER_
->_I'm making this library because I needed a validation library that can grow and adapt to every project(something I couldn't really find online).<br/>The docs aren't really finished, and the library still has some way to go, I'll update and extend it over time.<br/>Happy coding._
+>_I'm making this library because I needed a validation library that can grow and adapt to every project(something I couldn't really find online).<br/>Happy coding._
 
 ## The it-validator is an async validation library designed to make request validations easier
 - [Installation](#installation)
