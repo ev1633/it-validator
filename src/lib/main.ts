@@ -1,6 +1,6 @@
 import { sanitize, trim } from '../lib/clean'
 
-import { validateType } from '../lib/types'
+import { invalidType } from '../lib/types'
 
 import {
   hasValue,
@@ -35,9 +35,9 @@ export const validateField = async (values: GenericObject, rule: Validator.Rule)
     return { err: errorMessage(rule.message, 'required', 'is required'), value }
 
   if (hasValue(value)) {
-    const validType = validateType(rule.type, value)
-    if (!validType.valid)
-      return { err: errorMessage(rule.message, 'type', `value ${value} doesn't match the type ${validType.type}`), value }
+    const notValidType = invalidType(rule, value)
+    if (notValidType)
+      return { err: errorMessage(rule.message, 'type', `value ${value} doesn't match the type ${notValidType}`), value }
 
     if (invalidAlpha(rule, value))
       return { err: errorMessage(rule.message, 'alpha', `value ${value} must contain alphabetic characters only`), value }
@@ -101,7 +101,7 @@ export const validateField = async (values: GenericObject, rule: Validator.Rule)
 
     }
 
-    if (!validateType(Number, value) && validateType(String, value))
+    if (invalidType({ ...rule, type: Number }, value) && !invalidType({ ...rule, type: String }, value))
       value = decodeURI(value)
   }
 

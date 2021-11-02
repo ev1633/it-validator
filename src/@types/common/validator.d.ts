@@ -1,13 +1,13 @@
 type GenericObject = { [key: string]: any }
 namespace Validator {
-  type Type = Number | Date | Array<any> | Object | String | null
+  type Type = Number | Date | Array | Object | String
 
   type Rules = (v: any) => { [key: string]: ValidationRule }
 
   type Rule = {
     ruleName: string
     required?: boolean,
-    type?: ValidationType,
+    type?: Type,
     min?: number,
     max?: number,
     email?: boolean,

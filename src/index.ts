@@ -1,13 +1,16 @@
 import { sanitize, trim } from './lib/clean'
 
 import {
-  validateType,
-  validateStringType,
-  validateDateType,
-  validateArrayType,
-  validateObjectType,
-  validateNumberType,
+  invalidType,
+  invalidBoolean,
+  invalidNumber,
+  invalidDate,
+  invalidArray,
+  invalidObject,
+  invalidString
 } from './lib/types'
+
+
 
 import {
   hasValue,
@@ -15,11 +18,10 @@ import {
   invalidMin,
   invalidIn,
   invalidRegex,
-  invalidRequiredIf,
-  invalidRequiredUnless,
-  invalidRequiredWith,
-  invalidRequiredWithout,
-  invalidRequiredWithoutAll
+  invalidAlpha,
+  invalidAlphaNum,
+  invalidAlphaDash,
+  invalidEmail
 } from './lib/functions'
 
 import { loop } from './lib/main'
@@ -45,21 +47,21 @@ export {
   validate,
   sanitize,
   trim,
-  validateType,
-  validateNumberType,
-  validateDateType,
-  validateArrayType,
-  validateObjectType,
-  validateStringType,
+  invalidType,
+  invalidBoolean,
+  invalidNumber,
+  invalidDate,
+  invalidArray,
+  invalidObject,
+  invalidString,
   hasValue,
   invalidMax,
   invalidMin,
   invalidIn,
   invalidRegex,
-  invalidRequiredIf,
-  invalidRequiredUnless,
-  invalidRequiredWith,
-  invalidRequiredWithout,
-  invalidRequiredWithoutAll
+  invalidAlpha,
+  invalidAlphaNum,
+  invalidAlphaDash,
+  invalidEmail
 }
 
