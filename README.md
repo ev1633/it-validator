@@ -1,5 +1,12 @@
 # it-validator
 
+## _DISCLAIMER_
+_
+I'm making this library because I needed a validation library that can grow and adapt to every project(something I couldn't really find online).<br/>
+The docs aren't really finished, and the library still has some way to go, I'll update and extend it over time.<br/>
+Happy coding.
+_
+
 ## The it-validator is an async validation library designed to make request validations easier
 - [The basics](#the-basics)
 - [Available methods](#available-methods)
@@ -55,7 +62,7 @@ const { err, values } = await validate(obj, rules)
 
 
 ### Errors
-The error returned by the validator is an object containig all the failed rules as props.<br/>
+The error returned by the validator is an object containing all the failed rules as props.<br/>
 Every property in the error message is a property from the object you sent to validate that didn't pass your requirements 
 
 #### Custom error for every type of validation
@@ -65,7 +72,7 @@ In the rules object you can provide a message property with a text for every fai
 const rules = (obj) => {
   requiredString: { required:true, type:String, message:"I'm required" },
   someNumberGreaterThan5: { type: Number, min: 6, message:"I must be grater than 5" },
-  onlyRequiredWithoutAnotherField: { requiredWithout: ['someNumberGreaterThan5'], message:"Sometime I'm required" }
+  requiredWithoutAnotherField: { requiredWithout: ['someNumberGreaterThan5'], message:"Sometime I'm required" }
 }
 ```
 Another option is to provide a specific message for a type of validation
@@ -78,13 +85,13 @@ const rules = (obj) => {
 
 
 ### Values
-Sometimes you may wish yo continue with a valid values object even when you have errors. <br/>
+Sometimes you may wish to continue with a valid values object even when you have errors. <br/>
 That's why the library still returns a values object containing every value that passed validations.
 
 
 
 ### Why a function returning an object?
-In order to allow the validate function to be asynchronous and to be able to access another values in the object you sent to validate we need to initialize the rules as function that accepts a parameter and returns an object with the actual rules.
+In order to allow the validate function to be asynchronous and to be able to access another values in the object you sent to validate, we need to initialize the rules as function that accepts a parameter and returns an object with the actual rules.
 
 
 ### Custom Validations
