@@ -1,4 +1,4 @@
-// import dts from 'rollup-plugin-dts'
+import dts from 'rollup-plugin-dts'
 import esbuild from 'rollup-plugin-esbuild'
 
 const name = require('./package.json').main.replace(/\.js$/, '')
@@ -16,20 +16,20 @@ export default [
       {
         file: `${name}.js`,
         format: 'cjs',
-        sourcemap: true,
+        sourcemap: false,
       },
       {
         file: `${name}.mjs`,
         format: 'es',
-        sourcemap: true,
+        sourcemap: false,
       },
     ],
   }),
-  // bundle({
-  //   plugins: [dts()],
-  //   output: {
-  //     file: `${name}.d.ts`,
-  //     format: 'es',
-  //   },
-  // }),
+  bundle({
+    plugins: [dts()],
+    output: {
+      file: `${name}.d.ts`,
+      format: 'es',
+    },
+  }),
 ]

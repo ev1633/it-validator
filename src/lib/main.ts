@@ -1,3 +1,4 @@
+import * as Types from '../@types/common'
 import { sanitize, trim } from '../lib/clean'
 
 import { invalidType } from '../lib/types'
@@ -25,7 +26,7 @@ import {
    * @param  { object } values - all the values sent to the validator
    * @param  { object } rules - the rules to validate against
    */
-export const validateField = async (values: GenericObject, rule: Validator.Rule): Promise<any> => {
+export const validateField = async (values: Types.GenericObject, rule: Types.Validator.Rule): Promise<any> => {
 
   if (!rule) return { err: null, value: undefined }
 
@@ -118,16 +119,16 @@ export const validateField = async (values: GenericObject, rule: Validator.Rule)
  */
 
 
-export const loop = async (values: GenericObject, rules: GenericObject): Promise<{ err: GenericObject | string | null, values: any }> => {
+export const loop = async (values: Types.GenericObject, rules: Types.GenericObject): Promise<{ err: Types.GenericObject | string | null, values: any }> => {
 
-  let validValues: GenericObject = {}
-  let errors: GenericObject = {}
+  let validValues: Types.GenericObject = {}
+  let errors: Types.GenericObject = {}
 
   for (let ruleName in rules) {
 
     let value = values[ruleName]
 
-    const rule: Validator.Rule = rules[ruleName]
+    const rule: Types.Validator.Rule = rules[ruleName]
 
     // if the rule is null and value has a value, add it to values
     if (!rule) {
@@ -156,7 +157,7 @@ export const loop = async (values: GenericObject, rules: GenericObject): Promise
     if (validateValue === undefined) continue
 
 
-    if ([Array, Object].includes(rule.type)) {
+    if (rule.type === Array || rule.type === Object) {
 
       if (!rule.children) {
         if (validateValue !== undefined) {
@@ -169,7 +170,7 @@ export const loop = async (values: GenericObject, rules: GenericObject): Promise
       if (rule.type === Array) {
 
         const validateArr = []
-        const arrErr: GenericObject = {}
+        const arrErr: Types.GenericObject = {}
 
         for (const i in validateValue) {
 

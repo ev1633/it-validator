@@ -13,7 +13,7 @@
 - [Why a function returning an object?](#why-a-function-returning-an-object)
 - [Custom validations?](#custom-validations)
 - [What is the rules parameter for?](#what-is-the-rules-paramater-for)
-- [Extra function exposed?](#extra-functions-exposed)
+- [Extra functions exposed](#extra-functions-exposed)
 
 ### Installation
 The it-validator work both on Node and your browser.
@@ -456,7 +456,7 @@ The only difference of a [Rule] and how you've been declaring the rules is that 
 // rule example
 { ruleName: 'name', type: String }
 ```
-Don't worry you'll have an example with each one and mark the functions that need the [Rule] as the first parameter with a #.
+Don't worry you'll have an example with each one and a # in the functions that need the [Rule] as the first parameter.<br/>
 _Alert: most of these functions are negations_
 - [sanitize](#sanitize)
 - [trim](#trim)

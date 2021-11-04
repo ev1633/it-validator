@@ -1,3 +1,4 @@
+import * as Types from '../@types/common'
 export const invalidNumber = (value: any): boolean => {
   return !(!isNaN(value) || typeof value === "number" || value instanceof Number)
 }
@@ -29,10 +30,10 @@ export const invalidBoolean = (value: any): boolean => {
   */
 
 
-export const invalidType = (rule: Validator.Rule, value: any): boolean | string => {
+export const invalidType = (rule: Types.Validator.Rule, value: any): boolean | string => {
   if (!rule || !rule.type) return false
-  const validTypes = [Boolean, Number, Date, Array, Object, String]
-  if (!validTypes.includes(rule.type)) return false
+  // const validTypes = [Boolean, Number, Date, Array, Object, String]
+  // if (!validTypes.includes(rule.type)) return false
   switch (rule.type) {
     case Boolean:
       return invalidBoolean(value) ? 'Boolean' : false

@@ -1,3 +1,4 @@
+import * as Types from './@types/common'
 import { sanitize, trim } from './lib/clean'
 
 import {
@@ -26,7 +27,7 @@ import {
 
 import { loop } from './lib/main'
 
-const validate = async (sentValues: any, sentRules: Validator.Rules): Promise<{ err: any, values: any }> => {
+const validate = async (sentValues: any, sentRules: Types.Validator.Rules): Promise<{ err: any, values: any }> => {
 
   if (!sentValues) return { err: { validatorFatal: "Need some fields to validate" }, values: null }
 
@@ -62,6 +63,7 @@ export {
   invalidAlpha,
   invalidAlphaNum,
   invalidAlphaDash,
-  invalidEmail
+  invalidEmail,
+  Types
 }
 

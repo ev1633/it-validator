@@ -1,5 +1,6 @@
+import * as Types from '../@types/common'
 export const sanitize = (string: string) => {
-  const map: GenericObject = {
+  const map: Types.GenericObject = {
     '&': '&amp;',
     '<': '&lt;',
     '>': '&gt;',
