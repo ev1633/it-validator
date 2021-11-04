@@ -16,13 +16,20 @@
   "files": [
     "dist/*"
   ],
+  "keywords": [
+    "promise",
+    "async",
+    "javascript",
+    "validation",
+    "validator"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\"",
     "dev": "NODE_ENV=development nodemon",
     "build": "rimraf ./dist && rollup -c"
   },
   "author": "Ezequiel Vergara",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/ev1633/it-validator/issues"
   },
