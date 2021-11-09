@@ -416,7 +416,7 @@ If you'd like to validate an object properties, you can add the children method 
 ```js
 const rules = (obj) => ({
   validateObject: { type: Object, children:{
-    firstNestedProperty: { required:true, type: String } 
+    firstNestedProperty: { required:true, type: String },
     secondNestedProperty: null
   } }
 })
@@ -428,7 +428,7 @@ Just add the children property with the validation rules you wish your nested ob
 ```js
 const rules = (obj) => ({
   validateArray: { type: Object, children:{
-    firstNestedProperty: { required: true, type: String } 
+    firstNestedProperty: { required: true, type: String },
     secondNestedProperty: null
   } }
 })
@@ -475,13 +475,12 @@ _Alert: most of these functions are negations._<br/>
 Validate the second parameter (the value) against the first parameter type within the [available types](#available-types).<br/>
 The function will return a string with the type if it's invalid or false if it's valid.
 ```js
-let res = invalidType(String, 'MyName')
-// false
-res = invalidType(String, 3)
-// String
+let res = invalidType(String, 'MyName') // false
+res = invalidType(String, 3) // String
 ```
 
-#### invalidBoolean _"request friendly"_
+#### invalidBoolean 
+_"request friendly"_
 The library will consider the following values as a boolean: 
 ```js
 [true, false, 1, 0, 'true', 'false', '1', '0']
@@ -495,7 +494,8 @@ res = invalidBoolean('1') // false
 res = invalidBoolean('false') // false
 ```
 
-#### invalidNumber _"request friendly"_
+#### invalidNumber 
+_"request friendly"_
 The library will consider string that are numbers as numbers: 
 ```js
 let res = invalidNumber('MyName') // true
