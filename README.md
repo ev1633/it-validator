@@ -58,12 +58,11 @@ import { validate } from "it-validator"
 ```
 
 Then you call the validate function using async/await or .then.<br/>
-The validate function accepts 2 parameters: (the object, the rules)<br/>
+The validate function accepts 2 parameters: (the object, the rules).<br/>
 It will return an object containing the err and values properties
 ```js
 const { err, values } = await validate(obj, rules)
 ```
-
 
 
 ### Errors
@@ -218,7 +217,6 @@ const rules = (values) => ({
 })
 ```
 
-
 #### requiredWith
 The field under validation is required if any of the specified fields is present and has a value.
 
@@ -230,7 +228,6 @@ const rules = (values) => ({
   andOneMore: { type: String }
 })
 ```
-
 
 #### requiredWithout
 The field under validation is required if any of the specified fields is not present or it doesn't have a value.
@@ -315,7 +312,6 @@ const rules = (values) => {
   return {
     requiredString: { required:true, type:String, validate: validateTheRequiredString }
   }
-  
 }
 ```
 

@@ -1,4 +1,5 @@
 import * as Types from './@types/common'
+
 import { sanitize, trim } from './lib/clean'
 
 import {
@@ -10,8 +11,6 @@ import {
   invalidObject,
   invalidString
 } from './lib/types'
-
-
 
 import {
   hasValue,
@@ -33,15 +32,7 @@ const validate = async (sentValues: any, sentRules: Types.Validator.Rules): Prom
 
   if (!sentRules) return { err: { validatorFatal: "Need some rules to validate against" }, values: null }
 
-  return await (async (sentValues, sentRules) => {
-
-    const rules = sentRules(sentValues)
-
-    const { err, values } = await loop(sentValues, rules)
-
-    return { err, values }
-
-  })(sentValues, sentRules)
+  return await (async (sentValues, sentRules) => await loop(sentValues, sentRules(sentValues)))(sentValues, sentRules)
 }
 
 export {

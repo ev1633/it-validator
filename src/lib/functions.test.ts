@@ -1,4 +1,18 @@
-import { hasValue, invalidAlpha, invalidAlphaNum, invalidAlphaDash, invalidIn, invalidRegex, invalidMax, invalidMin } from './functions';
+import {
+  hasValue,
+  invalidAlpha,
+  invalidAlphaNum,
+  invalidAlphaDash,
+  invalidIn,
+  invalidRegex,
+  invalidMax,
+  invalidMin,
+  invalidRequiredIf,
+  invalidRequiredUnless,
+  invalidRequiredWith,
+  invalidRequiredWithout,
+  invalidRequiredWithoutAll
+} from './functions';
 
 describe('functions', () => {
 
@@ -82,6 +96,42 @@ describe('functions', () => {
     expect(invalidMin(15, 14)).toBe(true)
     expect(invalidMin(15, true)).toBe(false)
   })
+
+  test('returns true if the value of first parameter does not match the second parameter', () => {
+    expect(invalidRequiredIf(['another_field', 10], { "another_field": 10 }, 10)).toBe(false)
+    expect(invalidRequiredIf(['another_field', 10], { "another_field": 10 }, null)).toBe(true)
+    expect(invalidRequiredIf(['another_field', 11], { "another_field": 10 })).toBe(false)
+  })
+
+  test('returns true if the value of first parameter matches the second parameter', () => {
+    expect(invalidRequiredUnless(['another_field', 10], { "another_field": 10 })).toBe(false)
+    expect(invalidRequiredUnless(['another_field', 10], { "another_field": 11 }, 14)).toBe(false)
+    expect(invalidRequiredUnless(['another_field', 10], { "another_field": 11 }, true)).toBe(false)
+    expect(invalidRequiredUnless(['another_field', 10], { "another_field": 11 }, false)).toBe(false)
+    expect(invalidRequiredUnless(['another_field', 10], { "another_field": 11 }, null)).toBe(true)
+    expect(invalidRequiredUnless(['another_field', 1], { "another_field": 10 })).toBe(true)
+  })
+
+  test('returns true if the third parameter is missing or does not have a valid value and one of the values in the first parameter is in the second parameter and has a value', () => {
+    expect(invalidRequiredWith(['another_field'], { "another_field": 10 })).toBe(true)
+    expect(invalidRequiredWith(['another_field', 'other'], { "other": 11 }, false)).toBe(false)
+    expect(invalidRequiredWith(['another_field', 'other'], { "other": 11 })).toBe(true)
+    expect(invalidRequiredWith(['another_field', 'other'], { "other": 11 }, null)).toBe(true)
+    expect(invalidRequiredWith(['another_field', 'other'], { "another": 11 }, null)).toBe(false)
+  })
+
+  test('returns true when the third parameter is not valid or missing and some of the first parameters values is not present in the second', () => {
+    expect(invalidRequiredWithout(['another_field'], { "another_field": 10 })).toBe(false)
+    expect(invalidRequiredWithout(['another_field'], { "other": 11 })).toBe(true)
+    expect(invalidRequiredWithout(['another_field'], { "other": 11 }, null)).toBe(true)
+  })
+
+  test('returns true when the third parameter is not valid or missing and all of the first parameters values are not present in the second', () => {
+    expect(invalidRequiredWithoutAll(['another_field', 'other'], { "another_field": 10 })).toBe(false)
+    expect(invalidRequiredWithoutAll(['another_field', 'other'], { "another": 10 })).toBe(true)
+    expect(invalidRequiredWithoutAll(['another_field', 'other'], { "another": 10 }, 1)).toBe(false)
+  })
+
 
 })
 

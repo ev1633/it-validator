@@ -67,7 +67,7 @@ export const validateField = async (values: Types.GenericObject, rule: Types.Val
     if (execIfPresent(!!rule.max, invalidMax)(rule.max, value))
       return { err: errorMessage(rule.message, 'max', `value ${value} has a max of ${rule.max}`), value }
 
-    if (execIfPresent(!!rule.max, invalidMin)(rule.min, value))
+    if (execIfPresent(!!rule.min, invalidMin)(rule.min, value))
       return { err: errorMessage(rule.message, 'min', `value ${value} has a min of ${rule.min}`), value }
   }
 
@@ -77,19 +77,24 @@ export const validateField = async (values: Types.GenericObject, rule: Types.Val
       return { err: errorMessage(rule.message, 'validate', `${validateError}`), value }
   }
 
-  if (invalidRequiredIf(rule, value, values))
+  // if (invalidRequiredIf(rule, value, values))
+  if (execIfPresent(!!rule.requiredIf, invalidRequiredIf)(rule.requiredIf, values, value))
     return { err: errorMessage(rule.message, 'requiredIf', `value ${value}, needs to be present if ${rule.requiredIf![0]} is equal to ${rule.requiredIf![1]}`), value }
 
-  if (invalidRequiredUnless(rule, value, values))
+  // if (invalidRequiredUnless(rule, value, values))
+  if (execIfPresent(!!rule.requiredUnless, invalidRequiredUnless)(rule.requiredUnless, values, value))
     return { err: errorMessage(rule.message, 'requiredUnless', `value ${value}, needs to be present unless ${rule.requiredWithout![0]} is equal to ${rule.requiredWithout![1]}`), value }
 
-  if (invalidRequiredWith(rule, value, values))
+  // if (invalidRequiredWith(rule, value, values))
+  if (execIfPresent(!!rule.requiredWith, invalidRequiredWith)(rule.requiredWith, values, value))
     return { err: errorMessage(rule.message, 'requiredWith', `value ${value}, needs to be present if any of [${rule.requiredWith}] is present`), value }
 
-  if (invalidRequiredWithout(rule, value, values))
+  // if (invalidRequiredWithout(rule, value, values))
+  if (execIfPresent(!!rule.requiredWithout, invalidRequiredWithout)(rule.requiredWithout, values, value))
     return { err: errorMessage(rule.message, 'requiredWithout', `value ${value}, needs to be present if one of [${rule.requiredWithout}] is not present`), value }
 
-  if (invalidRequiredWithoutAll(rule, value, values))
+  // if (invalidRequiredWithoutAll(rule, value, values))
+  if (execIfPresent(!!rule.requiredWithoutAll, invalidRequiredWithoutAll)(rule.requiredWithoutAll, values, value))
     return { err: errorMessage(rule.message, 'requiredWithoutAll', `value ${value}, needs to be present if all of [${rule.requiredWithoutAll}] is not present`), value }
 
 
@@ -147,29 +152,31 @@ export const loop = async (values: Types.GenericObject, rules: Types.GenericObje
 
     rule.ruleName = ruleName
 
+    // if it's not required, has a default and not a value, set the default
     if (!rule.required && rule.default && !hasValue(value)) {
       validValues[ruleName] = rule.default
       values[ruleName] = rule.default
       continue
     }
 
+    // first validate de field no matter what type it is
     let { err, value: validateValue } = await validateField(values, rule)
 
+    // if there is an error, add it to the errors and continue to the next one
     if (err) {
       errors[ruleName] = err
       continue
     }
 
+    // undefined means that the value won't be added
     if (validateValue === undefined) continue
-
 
     if (rule.type === Array || rule.type === Object) {
 
+      // if it has no children then it's already validated, just continue
       if (!rule.children) {
-        if (validateValue !== undefined) {
-          validValues[ruleName] = validateValue
-          values[ruleName] = validateValue
-        }
+        validValues[ruleName] = validateValue
+        values[ruleName] = validateValue
         continue
       }
 

@@ -1,3 +1,4 @@
+import { GenericObject } from './../@types/common/index';
 import * as Types from '../@types/common'
 type rule = boolean | null | undefined
 
@@ -30,42 +31,39 @@ export const invalidEmail = (value: any = undefined): boolean => {
   if (!value || !(typeof value === 'string')) return true
   return !invalidEmailRegex.test(value)
 }
-export const invalidIn = (haystack: Array<any>, value: any): boolean => {
+export const invalidIn = (haystack: Array<any>, value: any = undefined): boolean => {
   if (!haystack.length || !(haystack instanceof Array)) return true
   return !haystack.includes(value)
 }
-export const invalidRegex = (regex: RegExp, value: any): boolean => {
+export const invalidRegex = (regex: RegExp, value: any = undefined): boolean => {
   if (value instanceof Date) value = value.toISOString()
   return !(regex).test(String(value))
 }
-export const invalidMax = (max: number, value: any): boolean => {
+export const invalidMax = (max: number, value: any = undefined): boolean => {
   return (typeof value === 'number' && Number(value) > max) || (value.length > max)
 }
-export const invalidMin = (min: number, value: any): boolean => {
+export const invalidMin = (min: number, value: any = undefined): boolean => {
   return (typeof value === 'number' && Number(value) < min) || (value.length < min)
 }
 
-
-export const invalidRequiredIf = (rule: Types.Validator.Rule, value: any, values: any): boolean => {
-  if (!rule || !rule.requiredIf) return false
-  return rule.requiredIf.length == 2 && !hasValue(value) && values[rule.requiredIf[0]] === rule.requiredIf[1]
+export const invalidRequiredIf = (rule: [string, any], values: GenericObject, value: any = undefined): boolean => {
+  return rule.length !== 2 || !(rule[0] in values) || (values[rule[0]] === rule[1] && !hasValue(value))
+  // return rule.length == 2 && !hasValue(value) && values[rule[0]] !== rule[1]
 }
-export const invalidRequiredUnless = (rule: Types.Validator.Rule, value: any, values: any): boolean => {
-  if (!rule || !rule.requiredUnless) return false
-  return rule.requiredUnless.length == 2 && !hasValue(value) && values[rule.requiredUnless[0]] !== rule.requiredUnless[1]
+export const invalidRequiredUnless = (rule: [string, any], values: GenericObject, value: any = undefined): boolean => {
+  return rule.length !== 2 || !(rule[0] in values) || (values[rule[0]] !== rule[1] && !hasValue(value))
+  // return rule.requiredUnless.length == 2 && !hasValue(value) && values[rule.requiredUnless[0]] !== rule.requiredUnless[1]
 }
-export const invalidRequiredWith = (rule: Types.Validator.Rule, value: any, values: any): boolean => {
-  if (!rule || !rule.requiredWith) return false
-  return !hasValue(value) && rule.requiredWith.some(item => item in values && hasValue(values[item]))
+export const invalidRequiredWith = (rule: string[], values: any, value: any = undefined): boolean => {
+  return !hasValue(value) && rule.some(item => item in values && hasValue(values[item]))
 }
-export const invalidRequiredWithout = (rule: Types.Validator.Rule, value: any, values: any): boolean => {
-  if (!rule || !rule.requiredWithout) return false
-  return !hasValue(value) && rule.requiredWithout.some(item => !(item in values) && !hasValue(values[item]))
+export const invalidRequiredWithout = (rule: string[], values: any, value: any = undefined): boolean => {
+  return !hasValue(value) && rule.some(item => !(item in values) || !hasValue(values[item]))
+  // return !hasValue(value) && rule.requiredWithout.some(item => !(item in values) && !hasValue(values[item]))
 }
 
-export const invalidRequiredWithoutAll = (rule: Types.Validator.Rule, value: any, values: any): boolean => {
-  if (!rule || !rule.requiredWithoutAll) return false
-  return !hasValue(value) && rule.requiredWithoutAll.every(item => !(item in values) && !hasValue(values[item]))
+export const invalidRequiredWithoutAll = (rule: string[], values: any, value: any = undefined): boolean => {
+  return !hasValue(value) && rule.every(item => !(item in values) && !hasValue(values[item]))
 }
 
 export const errorMessage = (message: string | Types.GenericObject | undefined, type: string, base: string,): string => {
