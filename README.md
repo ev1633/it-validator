@@ -122,8 +122,6 @@ const rules = (values) => ({
 })
 ```
 
-
-
 ### Available methods
 - [type](#type)
 - [required](#required)
@@ -150,7 +148,7 @@ const rules = (values) => ({
   stringField: { type:String }
 })
 ```
-The available types are:
+##### Available types
   - Boolean: true, false, 1 or 0
   - String
   - Number: not a strict validation, a string containing a posible number will evaluate to true
@@ -179,7 +177,7 @@ const rules = (values) => ({
 A very simple validation for email, it's not perfect but it will validate a simple email.
 ```js
 const rules = (values) => ({
-  simpleEmail: { email:true }
+  simpleEmail: { email: true }
 })
 ```
 
@@ -188,7 +186,7 @@ The value will only pass the validation if it's in the declared array.
 ```js
 const rules = (values) => ({
   numberOnlyBelow3: { type: Number, in: [1,2,3] },
-  specificStrings: { type: String, in:['one string', 'or maybe this one'] }
+  specificStrings: { type: String, in: ['one string', 'or maybe this one'] }
 })
 ```
 
@@ -410,6 +408,7 @@ The library allows you to validate nested objects or array (maybe of objects too
 
 Let's start with and easy object or array validation.<br/>
 If you omit the children method, the validator will allow everything inside the object/array to be a part of the valid values
+
 ```js
 const rules = (obj) => ({
   easyArray: { type: Array},
@@ -417,6 +416,7 @@ const rules = (obj) => ({
 })
 ```
 If you'd like to validate an object properties, you can add the children method and specify the rules for each attribute you want to be included in the result values.
+
 ```js
 const rules = (obj) => ({
   validateObject: { type: Object, children:{
@@ -428,6 +428,7 @@ const rules = (obj) => ({
 Note that, like every other rule, if you set the property to null, the validator will consider any value as a valid value.<br/><br/>
 Also you can validate an array of objects.<br/>
 Just add the children property with the validation rules you wish your nested objects to have.
+
 ```js
 const rules = (obj) => ({
   validateArray: { type: Object, children:{
@@ -450,14 +451,11 @@ You can start using them just like you did with the validate function.
 ```js
 import { sanitize, trim } from "it-validator"
 ```
-Some of these functions are more high level and will require you to send a [Rule] as the first parameter and the value as the second.<br/>
-The only difference of a [Rule] and how you've been declaring the rules is that the [Rule] is an object with every method you'd like to use and an extra property that's the ruleName.
-```js
-// rule example
-{ ruleName: 'name', type: String }
-```
-Don't worry you'll have an example with each one and a # in the functions that need the [Rule] as the first parameter.<br/>
-_Alert: most of these functions are negations_
+
+>Some functions will take a poetic license to make request validations easier. <bt/>
+>They'll be marked as "request friendly" and will have and explanation
+
+_Alert: most of these functions are negations._<br/>
 - [sanitize](#sanitize)
 - [trim](#trim)
 - [invalidEmail](#invalidemail)
@@ -477,184 +475,140 @@ _Alert: most of these functions are negations_
 - [invalidAlphaNum](#invalidalphanum)
 - [invalidAlphaDash](#invalidalphadash)
 
-#### invalidType #
-This will validate if the [Rule] object has the type property with some of the available [type validations](#type).<br/>
+#### invalidType
+Validate the second parameter (the value) against the first parameter type within the [available types](#available-types).<br/>
 The function will return a string with the type if it's invalid or false if it's valid.
 ```js
-let res = invalidType({ ruleName: 'name', type: String }, 'MyName')
+let res = invalidType(String, 'MyName')
 // false
-res = invalidType({ ruleName: 'name', type: String }, 3)
+res = invalidType(String, 3)
 // String
 ```
 
-#### invalidBoolean
+#### invalidBoolean _"request friendly"_
+The library will consider the following values as a boolean: 
 ```js
-let res = invalidBoolean('MyName')
-// true
-res = invalidBoolean(1)
-// false
+[true, false, 1, 0, 'true', 'false', '1', '0']
 ```
 
-#### invalidNumber
 ```js
-let res = invalidNumber('MyName')
-// true
-res = invalidNumber(1)
-// false
+let res = invalidBoolean('MyName') // true
+res = invalidBoolean(0) // false
+res = invalidBoolean(false) // false
+res = invalidBoolean('1') // false
+res = invalidBoolean('false') // false
+```
+
+#### invalidNumber _"request friendly"_
+The library will consider string that are numbers as numbers: 
+```js
+let res = invalidNumber('MyName') // true
+res = invalidNumber(1) // false
 ```
 
 #### invalidDate
 ```js
-let res = invalidDate('something')
-// true
-res = invalidDate('2000/10/10')
-// false
+let res = invalidDate('something') // true
+res = invalidDate('2000/10/10') // false
 ```
 
 #### invalidArray
 ```js
-let res = invalidArray('something')
-// true
-res = invalidArray([1,2,3])
-// false
+let res = invalidArray('something') // true
+res = invalidArray([1,2,3]) // false
 ```
 
 #### invalidObject
 ```js
-let res = invalidObject('something')
-// true
-res = invalidObject({one:1})
-// false
+let res = invalidObject('something') // true
+res = invalidObject({one:1}) // false
 ```
-Be aware that arrays and dates are objects. 
 
 #### invalidString
 ```js
-let res = invalidString(1)
-// true
-res = invalidObject('a string')
-// false
+let res = invalidString(1) // true
+res = invalidObject('a string') // false
 ```
 
 #### sanitize
-
 ```js
-const res = sanitize('someString&someOther')
-// someString&amp;someOther
-
+const res = sanitize('someString&someOther') // someString&amp;someOther
 ```
 
 #### trim
 ```js
-const res = sanitize('   someString    ')
-// someString
-
+const res = sanitize('   someString    ') // someString
 ```
 
 #### hasValue
 ```js
-let res = hasValue('')
-// false
-res = hasValue('value')
-// true
-res = hasValue(null)
-// false
-res = hasValue(undefined)
-// false
-res = hasValue(0)
-// true
-res = hasValue(false)
-// true
+let res = hasValue('') // false
+res = hasValue('value') // true
+res = hasValue(null) // false
+res = hasValue(undefined) // false
+res = hasValue(0) // true
+res = hasValue(false) // true
 ```
 
 #### invalidEmail
+Value needs to be a string.
 ```js
-let res = invalidEmail({ ruleName: 'emailField', type: String, email: true }, 'some@email')
-// true
-res = invalidEmail({ ruleName: 'emailField', type: String, email: true }, 'some@email.com')
-// false
-res = invalidEmail({ ruleName: 'emailField', type: String, email: true }, 'some@em#ail.com')
-// true
-
+let res = invalidEmail('some@email') // true
+res = invalidEmail('some@email.com') // false
+res = invalidEmail('some@em#ail.com') // true
 ```
-
 
 #### invalidMax
 ```js
-let res = invalidMax({ ruleName: 'name', type: String, max: 3 }, 'more')
-// true
-res = invalidMax({ ruleName: 'name', type: String, max: 3 }, 'mor')
-// false
-res = invalidMax({ ruleName: 'age', type: Number, max: 90 }, 90)
-// false
-res = invalidMax({ ruleName: 'age', type: Number, max: 90 }, 91)
-// true
+let res = invalidMax('more') // true
+res = invalidMax('mor') // false
+res = invalidMax(90) // false
+res = invalidMax(91) // true
 ```
+
 #### invalidMin
 ```js
-let res = invalidMin({ ruleName: 'name', type: String, min: 3 }, 'as')
-// true
-res = invalidMin({ ruleName: 'name', type: String, min: 3 }, 'asd')
-// false
-res = invalidMin({ ruleName: 'age', type: Number, min: 18 }, 18)
-// false
-res = invalidMin({ ruleName: 'age', type: Number, min: 17 }, 17)
-// true
+let res = invalidMin('as') // true
+res = invalidMin('asd') // false
+res = invalidMin(18) // false
+res = invalidMin(17) // true
 ```
+
 #### invalidIn
 ```js
-let res = invalidIn({ ruleName: 'someNumbers', type: Number, in:[1, 2, 3] }, 4)
-// true
-res = invalidIn({ ruleName: 'someNumbers', type: Number, in:[1, 2, 3] }, '3')
-// true
-res = invalidIn({ ruleName: 'someNumbers', type: Number, in:[1, 2, 3] }, 3)
-// false
+let res = invalidIn([1, 2, 3], 4) // true
+res = invalidIn([1, 2, 3], '3') // true
+res = invalidIn([1, 2, 3], 3) // false
 ```
+
 #### invalidRegex
 ```js
 const onlyNameInLowerRegex = /^[a-z]+$/
-let res = invalidRegex({ ruleName: 'onlyNameInLower', type: String, regex: onlyNameInLowerRegex }, 'Joe')
-// true
-res = invalidRegex({ ruleName: 'onlyNameInLower', type: String, regex: onlyNameInLowerRegex }, 'joe')
-// false
-
+let res = invalidRegex(onlyNameInLowerRegex , 'Joe') // true
+res = invalidRegex( onlyNameInLowerRegex , 'joe') // false
 ```
-#### invalidRequiredIf
-```js
-let res = invalidRegex({ ruleName: 'onlyNameInLower', type: String, regex: onlyNameInLowerRegex }, 'Joe')
-// true
-res = invalidRegex({ ruleName: 'onlyNameInLower', type: String, regex: onlyNameInLowerRegex }, 'joe')
-// false
 
-```
 #### invalidAlpha
+Value needs to be a string.
 ```js
-let res = invalidAlpha({ ruleName: 'onlyAlphabetic', type: String, alpha: true }, 'Joe')
-// false
-res = invalidAlpha({ ruleName: 'onlyAlphabetic', type: String, alpha: true }, 'joe24')
-// true
-
+let res = invalidAlpha( 'Joe') // false
+res = invalidAlpha( 'joe24') // true
 ```
+
 #### invalidAlphaNum
+Value needs to be a string.
 ```js
-let res = invalidAlphaNum({ ruleName: 'onlyAlphaNum', type: String, alphaNum: true }, 'Joe')
-// false
-res = invalidAlphaNum({ ruleName: 'onlyAlphaNum', type: String, alphaNum: true }, 'joe24')
-// false
-res = invalidAlphaNum({ ruleName: 'onlyAlphaNum', type: String, alphaNum: true }, 'joe24-')
-// true
-
+let res = invalidAlphaNum('Joe') // false
+res = invalidAlphaNum('joe24') // false
+res = invalidAlphaNum('joe24-') // true
 ```
-#### invalidAlphaDash
-```js
-let res = invalidAlphaDash({ ruleName: 'onlyAlphaNum', type: String, alphaDash: true }, 'Joe')
-// false
-res = invalidAlphaDash({ ruleName: 'onlyAlphaNum', type: String, alphaDash: true }, 'joe24')
-// false
-res = invalidAlphaDash({ ruleName: 'onlyAlphaNum', type: String, alphaDash: true }, 'joe24-')
-// false
-res = invalidAlphaDash({ ruleName: 'onlyAlphaNum', type: String, alphaDash: true }, 'joe24$')
-// true
 
+#### invalidAlphaDash
+Value needs to be a string.
+```js
+let res = invalidAlphaDash('Joe') // false
+res = invalidAlphaDash('joe24') // false
+res = invalidAlphaDash('joe24-') // false
+res = invalidAlphaDash('joe24$') // true
 ```
 

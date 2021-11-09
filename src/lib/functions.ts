@@ -1,48 +1,51 @@
 import * as Types from '../@types/common'
-export const hasValue = (value: any): boolean => {
+type rule = boolean | null | undefined
+
+const hasValueRegex = /\s/g
+const invalidAlphaRegex = /^[a-zA-Z\s]+$/
+const invalidAlphaNumRegex = /^[0-9a-zA-Z\s]+$/
+const invalidAlphaDashRegex = /^[0-9a-zA-Z\s-_]+$/
+const invalidEmailRegex = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
+export const hasValue = (value: any = null): boolean => {
   if (typeof value === 'string')
-    value = value.replace(/\s/g, "").length ? value : null
+    value = value.replace(hasValueRegex, "").length ? value : null
   return (typeof value !== 'undefined' && value !== null)
 }
-export const invalidAlpha = (rule: Types.Validator.Rule, value: any): boolean => {
-  if (!rule || !rule.alpha) return false
-  return !/^[a-zA-Z\s]+$/.test(value)
+export const invalidAlpha = (value: any = undefined): boolean => {
+  if (!value || !(typeof value === 'string')) return true
+  return !invalidAlphaRegex.test(value)
 }
 
-export const invalidAlphaNum = (rule: Types.Validator.Rule, value: any): boolean => {
-  if (!rule || !rule.alphaNum) return false
-  return !/^[0-9a-zA-Z\s]+$/.test(value)
+export const invalidAlphaNum = (value: any = undefined): boolean => {
+  if (!value || !(typeof value === 'string')) return true
+  return !invalidAlphaNumRegex.test(value)
 }
 
-export const invalidAlphaDash = (rule: Types.Validator.Rule, value: any): boolean => {
-  if (!rule || !rule.alphaDash) return false
-  return !/^[0-9a-zA-Z\s-_]+$/.test(value)
+export const invalidAlphaDash = (value: any = undefined): boolean => {
+  if (!value || !(typeof value === 'string')) return true
+  return !invalidAlphaDashRegex.test(value)
 }
 
-export const invalidEmail = (rule: Types.Validator.Rule, value: any): boolean => {
-  if (!rule || !rule.email) return false
-  const res = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i.test(value)
-  console.log({ res })
-  return !res
+export const invalidEmail = (value: any = undefined): boolean => {
+  if (!value || !(typeof value === 'string')) return true
+  return !invalidEmailRegex.test(value)
 }
-
-export const invalidMax = (rule: Types.Validator.Rule, value: any): boolean => {
-  if (!rule || !rule.max) return false
-  return (rule.type === Number && Number(value) > rule.max) || (value.length > rule.max)
+export const invalidIn = (haystack: Array<any>, value: any): boolean => {
+  if (!haystack.length || !(haystack instanceof Array)) return true
+  return !haystack.includes(value)
 }
-export const invalidMin = (rule: Types.Validator.Rule, value: any): boolean => {
-  if (!rule || !rule.min) return false
-  return (rule.type === Number && Number(value) < rule.min) || (value.length < rule.min)
-}
-export const invalidIn = (rule: Types.Validator.Rule, value: any): boolean => {
-  if (!rule || !rule.in) return false
-  return rule.in && !rule.in.includes(value)
-}
-export const invalidRegex = (rule: Types.Validator.Rule, value: any): boolean => {
-  if (!rule || !rule.regex) return false
+export const invalidRegex = (regex: RegExp, value: any): boolean => {
   if (value instanceof Date) value = value.toISOString()
-  return !(rule.regex).test(String(value))
+  return !(regex).test(String(value))
 }
+export const invalidMax = (max: number, value: any): boolean => {
+  return (typeof value === 'number' && Number(value) > max) || (value.length > max)
+}
+export const invalidMin = (min: number, value: any): boolean => {
+  return (typeof value === 'number' && Number(value) < min) || (value.length < min)
+}
+
+
 export const invalidRequiredIf = (rule: Types.Validator.Rule, value: any, values: any): boolean => {
   if (!rule || !rule.requiredIf) return false
   return rule.requiredIf.length == 2 && !hasValue(value) && values[rule.requiredIf[0]] === rule.requiredIf[1]

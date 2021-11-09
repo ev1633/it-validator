@@ -9,15 +9,13 @@ export const invalidArray = (value: any): boolean => {
   return !(value instanceof Array)
 }
 export const invalidObject = (value: any): boolean => {
-  return !(value instanceof Object)
+  return !(value instanceof Object && !(value instanceof Date) && !(value instanceof Array))
 }
 export const invalidString = (value: any): boolean => {
   return !(typeof value === 'string' || value instanceof String)
 }
-
 export const invalidBoolean = (value: any): boolean => {
-  console.log({ value })
-  return !(typeof value === 'boolean' || [0, 1].includes(value))
+  return !(typeof value === 'boolean' || [0, 1, '1', '0', 'true', 'false'].includes(value))
 }
 
 
@@ -30,11 +28,11 @@ export const invalidBoolean = (value: any): boolean => {
   */
 
 
-export const invalidType = (rule: Types.Validator.Rule, value: any): boolean | string => {
-  if (!rule || !rule.type) return false
+export const invalidType = (type: Types.Validator.Type | undefined, value: any): boolean | string => {
+  if (!type) return false
   // const validTypes = [Boolean, Number, Date, Array, Object, String]
   // if (!validTypes.includes(rule.type)) return false
-  switch (rule.type) {
+  switch (type) {
     case Boolean:
       return invalidBoolean(value) ? 'Boolean' : false
     case Number:
