@@ -24,6 +24,7 @@ import {
 type rule = boolean | null | undefined
 
 const execIfPresent = (rule: rule, hof: Function) => {
+  console.log(rule, hof)
   if (!rule) return () => false
   return hof
 }
@@ -41,35 +42,35 @@ export const validateField = async (values: Types.GenericObject, rule: Types.Val
   if (rule.required && !hasValue(value))
     return { err: errorMessage(rule.message, 'required', 'is required'), value }
 
-  if (hasValue(value)) {
-    const notValidType = invalidType(rule.type, value)
-    if (notValidType)
-      return { err: errorMessage(rule.message, 'type', `value ${value} doesn't match the type ${notValidType}`), value }
+  // if (hasValue(value)) {
+  const notValidType = invalidType(rule.type, value)
+  if (notValidType)
+    return { err: errorMessage(rule.message, 'type', `value ${value} doesn't match the type ${notValidType}`), value }
 
-    if (execIfPresent(rule.alpha, invalidAlpha)(value))
-      return { err: errorMessage(rule.message, 'alpha', `value ${value} must contain alphabetic characters only`), value }
+  if (execIfPresent(rule.alpha, invalidAlpha)(value))
+    return { err: errorMessage(rule.message, 'alpha', `value ${value} must contain alphabetic characters only`), value }
 
-    if (execIfPresent(rule.alphaNum, invalidAlphaNum)(value))
-      return { err: errorMessage(rule.message, 'alphaNum', `value ${value} must contain alphanumeric characters only`), value }
+  if (execIfPresent(rule.alphaNum, invalidAlphaNum)(value))
+    return { err: errorMessage(rule.message, 'alphaNum', `value ${value} must contain alphanumeric characters only`), value }
 
-    if (execIfPresent(rule.alphaDash, invalidAlphaDash)(value))
-      return { err: errorMessage(rule.message, 'alphaDash', `value ${value} must contain alphanumeric characters, dashes or undescores only`), value }
+  if (execIfPresent(rule.alphaDash, invalidAlphaDash)(value))
+    return { err: errorMessage(rule.message, 'alphaDash', `value ${value} must contain alphanumeric characters, dashes or undescores only`), value }
 
-    if (execIfPresent(rule.email, invalidEmail)(value))
-      return { err: errorMessage(rule.message, 'email', `value ${value} must be a valid email`), value }
+  if (execIfPresent(rule.email, invalidEmail)(value))
+    return { err: errorMessage(rule.message, 'email', `value ${value} must be a valid email`), value }
 
-    if (execIfPresent(!!rule.in, invalidIn)(rule.in, value))
-      return { err: errorMessage(rule.message, 'in', `value ${value} is not in ${rule.in}`), value }
+  if (execIfPresent(!!rule.in, invalidIn)(rule.in, value))
+    return { err: errorMessage(rule.message, 'in', `value ${value} is not in ${rule.in}`), value }
 
-    if (execIfPresent(!!rule.regex, invalidRegex)(rule.regex, value))
-      return { err: errorMessage(rule.message, 'regex', `value ${value} has not a valid format`), value }
+  if (execIfPresent(!!rule.regex, invalidRegex)(rule.regex, value))
+    return { err: errorMessage(rule.message, 'regex', `value ${value} has not a valid format`), value }
 
-    if (execIfPresent(!!rule.max, invalidMax)(rule.max, value))
-      return { err: errorMessage(rule.message, 'max', `value ${value} has a max of ${rule.max}`), value }
+  if (execIfPresent(!!rule.max, invalidMax)(rule.max, value))
+    return { err: errorMessage(rule.message, 'max', `value ${value} has a max of ${rule.max}`), value }
 
-    if (execIfPresent(!!rule.min, invalidMin)(rule.min, value))
-      return { err: errorMessage(rule.message, 'min', `value ${value} has a min of ${rule.min}`), value }
-  }
+  if (execIfPresent(!!rule.min, invalidMin)(rule.min, value))
+    return { err: errorMessage(rule.message, 'min', `value ${value} has a min of ${rule.min}`), value }
+  // }
 
   if (rule.validate) {
     const validateError = await rule.validate(value)

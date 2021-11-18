@@ -95,6 +95,7 @@ describe('functions', () => {
     expect(invalidMin(123, 123)).toBe(false)
     expect(invalidMin(15, 14)).toBe(true)
     expect(invalidMin(15, true)).toBe(false)
+    expect(invalidMin(2, '')).toBe(true)
   })
 
   test('returns true if the value of first parameter does not match the second parameter', () => {

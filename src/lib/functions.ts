@@ -1,6 +1,6 @@
 import { GenericObject } from './../@types/common/index';
 import * as Types from '../@types/common'
-type rule = boolean | null | undefined
+// type rule = boolean | null | undefined
 
 const hasValueRegex = /\s/g
 const invalidAlphaRegex = /^[a-zA-Z\s]+$/
@@ -43,6 +43,7 @@ export const invalidMax = (max: number, value: any = undefined): boolean => {
   return (typeof value === 'number' && Number(value) > max) || (value.length > max)
 }
 export const invalidMin = (min: number, value: any = undefined): boolean => {
+  console.log({ min, value })
   return (typeof value === 'number' && Number(value) < min) || (value.length < min)
 }
 
