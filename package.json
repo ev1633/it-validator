@@ -1,6 +1,6 @@
 {
   "name": "it-validator",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "description": "async validation library",
   "publishConfig": {
     "registry": "https://registry.npmjs.org",
