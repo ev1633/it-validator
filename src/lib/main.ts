@@ -24,7 +24,6 @@ import {
 type rule = boolean | null | undefined
 
 const execIfPresent = (rule: rule, hof: Function) => {
-  console.log(rule, hof)
   if (!rule) return () => false
   return hof
 }

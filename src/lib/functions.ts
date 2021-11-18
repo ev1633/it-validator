@@ -43,7 +43,6 @@ export const invalidMax = (max: number, value: any = undefined): boolean => {
   return (typeof value === 'number' && Number(value) > max) || (value.length > max)
 }
 export const invalidMin = (min: number, value: any = undefined): boolean => {
-  console.log({ min, value })
   return (typeof value === 'number' && Number(value) < min) || (value.length < min)
 }
 
