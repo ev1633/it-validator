@@ -18,8 +18,6 @@ export const invalidBoolean = (value: any): boolean => {
   return !(typeof value === 'boolean' || [0, 1, '1', '0', 'true', 'false'].includes(value))
 }
 
-
-
 /**
   * check type and execute validating function
   * @param  { function } type - type of value to validate
@@ -27,11 +25,9 @@ export const invalidBoolean = (value: any): boolean => {
   * @return { object }
   */
 
-
 export const invalidType = (type: Types.Validator.Type | undefined, value: any): boolean | string => {
   if (!type) return false
-  // const validTypes = [Boolean, Number, Date, Array, Object, String]
-  // if (!validTypes.includes(rule.type)) return false
+
   switch (type) {
     case Boolean:
       return invalidBoolean(value) ? 'Boolean' : false

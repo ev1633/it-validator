@@ -39,27 +39,23 @@ export const invalidRegex = (regex: RegExp, value: any = undefined): boolean => 
   if (value instanceof Date) value = value.toISOString()
   return !(regex).test(String(value))
 }
-export const invalidMax = (max: number, value: any = undefined): boolean => {
-  return (typeof value === 'number' && Number(value) > max) || (value.length > max)
+export const invalidMax = (rule: GenericObject, value: any = undefined): boolean => {
+  return (rule.type === Number && Number(value) > rule.max) || (value.length > rule.max)
 }
-export const invalidMin = (min: number, value: any = undefined): boolean => {
-  return (typeof value === 'number' && Number(value) < min) || (value.length < min)
+export const invalidMin = (rule: GenericObject, value: any = undefined): boolean => {
+  return (rule.type === Number && Number(value) < rule.min) || (value.length < rule.min)
 }
-
 export const invalidRequiredIf = (rule: [string, any], values: GenericObject, value: any = undefined): boolean => {
   return rule.length !== 2 || !(rule[0] in values) || (values[rule[0]] === rule[1] && !hasValue(value))
-  // return rule.length == 2 && !hasValue(value) && values[rule[0]] !== rule[1]
 }
 export const invalidRequiredUnless = (rule: [string, any], values: GenericObject, value: any = undefined): boolean => {
   return rule.length !== 2 || !(rule[0] in values) || (values[rule[0]] !== rule[1] && !hasValue(value))
-  // return rule.requiredUnless.length == 2 && !hasValue(value) && values[rule.requiredUnless[0]] !== rule.requiredUnless[1]
 }
 export const invalidRequiredWith = (rule: string[], values: any, value: any = undefined): boolean => {
   return !hasValue(value) && rule.some(item => item in values && hasValue(values[item]))
 }
 export const invalidRequiredWithout = (rule: string[], values: any, value: any = undefined): boolean => {
   return !hasValue(value) && rule.some(item => !(item in values) || !hasValue(values[item]))
-  // return !hasValue(value) && rule.requiredWithout.some(item => !(item in values) && !hasValue(values[item]))
 }
 
 export const invalidRequiredWithoutAll = (rule: string[], values: any, value: any = undefined): boolean => {

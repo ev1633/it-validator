@@ -1,16 +1,11 @@
 {
   "env": {
-    "browser": true,
+    "node": true,
     "commonjs": true,
     "es2021": true
   },
-  "extends": [
-    "prettier",
-    "eslint:recommended"
-  ],
-  "plugins": [
-    "prettier"
-  ],
+  "extends": ["prettier", "eslint:recommended"],
+  "plugins": ["prettier"],
   "parserOptions": {
     "ecmaVersion": 12
   },
@@ -21,14 +16,8 @@
     "prefer-const": "error",
     "no-unused-vars": "warn",
     "no-duplicate-imports": 2,
-    "function-call-argument-newline": [
-      "error",
-      "consistent"
-    ],
-    "linebreak-style": [
-      "error",
-      "unix"
-    ],
+    "function-call-argument-newline": ["error", "consistent"],
+    "linebreak-style": ["error", "unix"],
     // "prettier/prettier": [
     //   "warn",
     //   {}

@@ -7,7 +7,7 @@ export namespace Validator {
   export type Rule = {
     ruleName: string
     required?: boolean,
-    type?: Type,
+    type: Type,
     min?: number,
     max?: number,
     email?: boolean,

@@ -1,6 +1,6 @@
 import * as Types from '../@types/common'
 import { sanitize, trim } from '../lib/clean'
-
+ 
 import { invalidType } from '../lib/types'
 
 import {
@@ -35,22 +35,21 @@ const execIfPresent = (rule: rule, hof: Function) => {
 export const validateField = async (values: Types.GenericObject, rule: Types.Validator.Rule): Promise<any> => {
 
   if (!rule) return { err: null, value: undefined }
-
+  if(!rule.type) throw new Error(`${rule.ruleName} must have a type property specified`)
   let value = values[rule.ruleName]
 
   if (rule.required && !hasValue(value))
     return { err: errorMessage(rule.message, 'required', 'is required'), value }
 
-  // if (hasValue(value)) {
   if (rule.ruleName in values && values[rule.ruleName] !== undefined) {
     const notValidType = invalidType(rule.type, value)
     if (notValidType)
       return { err: errorMessage(rule.message, 'type', `value ${value} doesn't match the type ${notValidType}`), value }
 
-    if (execIfPresent(!!rule.min, invalidMin)(rule.min, value))
+    if (execIfPresent(!!rule.min, invalidMin)(rule, value))
       return { err: errorMessage(rule.message, 'min', `value ${value} has a min of ${rule.min}`), value }
 
-    if (execIfPresent(!!rule.max, invalidMax)(rule.max, value))
+    if (execIfPresent(!!rule.max, invalidMax)(rule, value))
       return { err: errorMessage(rule.message, 'max', `value ${value} has a max of ${rule.max}`), value }
 
     if (execIfPresent(rule.alpha, invalidAlpha)(value))
@@ -78,23 +77,18 @@ export const validateField = async (values: Types.GenericObject, rule: Types.Val
       return { err: errorMessage(rule.message, 'validate', `${validateError}`), value }
   }
 
-  // if (invalidRequiredIf(rule, value, values))
   if (execIfPresent(!!rule.requiredIf, invalidRequiredIf)(rule.requiredIf, values, value))
     return { err: errorMessage(rule.message, 'requiredIf', `value ${value}, needs to be present if ${rule.requiredIf![0]} is equal to ${rule.requiredIf![1]}`), value }
 
-  // if (invalidRequiredUnless(rule, value, values))
   if (execIfPresent(!!rule.requiredUnless, invalidRequiredUnless)(rule.requiredUnless, values, value))
     return { err: errorMessage(rule.message, 'requiredUnless', `value ${value}, needs to be present unless ${rule.requiredWithout![0]} is equal to ${rule.requiredWithout![1]}`), value }
 
-  // if (invalidRequiredWith(rule, value, values))
   if (execIfPresent(!!rule.requiredWith, invalidRequiredWith)(rule.requiredWith, values, value))
     return { err: errorMessage(rule.message, 'requiredWith', `value ${value}, needs to be present if any of [${rule.requiredWith}] is present`), value }
 
-  // if (invalidRequiredWithout(rule, value, values))
   if (execIfPresent(!!rule.requiredWithout, invalidRequiredWithout)(rule.requiredWithout, values, value))
     return { err: errorMessage(rule.message, 'requiredWithout', `value ${value}, needs to be present if one of [${rule.requiredWithout}] is not present`), value }
 
-  // if (invalidRequiredWithoutAll(rule, value, values))
   if (execIfPresent(!!rule.requiredWithoutAll, invalidRequiredWithoutAll)(rule.requiredWithoutAll, values, value))
     return { err: errorMessage(rule.message, 'requiredWithoutAll', `value ${value}, needs to be present if all of [${rule.requiredWithoutAll}] is not present`), value }
 

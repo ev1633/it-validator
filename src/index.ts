@@ -32,7 +32,14 @@ const validate = async (sentValues: any, sentRules: Types.Validator.Rules): Prom
 
   if (!sentRules) return { err: { validatorFatal: "Need some rules to validate against" }, values: null }
 
-  return await (async (sentValues, sentRules) => await loop(sentValues, sentRules(sentValues)))(sentValues, sentRules)
+  try{
+    const {err,values} = await (async (sentValues, sentRules) => await loop(sentValues, sentRules(sentValues)))(sentValues, sentRules)
+    return {err,values}
+  }catch(err:any){
+    const error = err.message || err
+    return { err: { validatorFatal:error }, values: null }
+  }
+
 }
 
 export {
