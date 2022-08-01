@@ -46,10 +46,10 @@ export const validateField = async (values: Types.GenericObject, rule: Types.Val
     if (notValidType)
       return { err: errorMessage(rule.message, 'type', `value ${value} doesn't match the type ${notValidType}`), value }
 
-    if (execIfPresent(!!rule.min, invalidMin)(rule, value))
+    if (execIfPresent(!!rule.min, invalidMin)(rule.type, rule.min, value))
       return { err: errorMessage(rule.message, 'min', `value ${value} has a min of ${rule.min}`), value }
 
-    if (execIfPresent(!!rule.max, invalidMax)(rule, value))
+    if (execIfPresent(!!rule.max, invalidMax)(rule.type, rule.max, value))
       return { err: errorMessage(rule.message, 'max', `value ${value} has a max of ${rule.max}`), value }
 
     if (execIfPresent(rule.alpha, invalidAlpha)(value))

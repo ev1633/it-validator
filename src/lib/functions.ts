@@ -39,11 +39,11 @@ export const invalidRegex = (regex: RegExp, value: any = undefined): boolean => 
   if (value instanceof Date) value = value.toISOString()
   return !(regex).test(String(value))
 }
-export const invalidMax = (rule: GenericObject, value: any = undefined): boolean => {
-  return (rule.type === Number && Number(value) > rule.max) || (value.length > rule.max)
+export const invalidMax = (type:Types.Validator.Type, max:number, value: any = undefined): boolean => {
+  return (type === Number && Number(value) > max) || (value.length > max)
 }
-export const invalidMin = (rule: GenericObject, value: any = undefined): boolean => {
-  return (rule.type === Number && Number(value) < rule.min) || (value.length < rule.min)
+export const invalidMin = (type:Types.Validator.Type, min:number, value: any = undefined): boolean => {
+  return (type === Number && Number(value) < min) || (value.length < min)
 }
 export const invalidRequiredIf = (rule: [string, any], values: GenericObject, value: any = undefined): boolean => {
   return rule.length !== 2 || !(rule[0] in values) || (values[rule[0]] === rule[1] && !hasValue(value))

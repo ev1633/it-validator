@@ -80,22 +80,22 @@ describe('functions', () => {
   })
 
   test('returns true if input if greater than max', () => {
-    expect(invalidMax(12, 'asdasdasdasd')).toBe(false)
-    expect(invalidMax(2, 'asdc')).toBe(true)
-    expect(invalidMax(8, 'asd')).toBe(false)
-    expect(invalidMax(123, 123)).toBe(false)
-    expect(invalidMax(14, 15)).toBe(true)
-    expect(invalidMax(14, true)).toBe(false)
+    expect(invalidMax(Number,12, 'asdasdasdasd')).toBe(false)
+    expect(invalidMax(Number,2, 'asdc')).toBe(true)
+    expect(invalidMax(Number,8, 'asd')).toBe(false)
+    expect(invalidMax(Number,123, 123)).toBe(false)
+    expect(invalidMax(Number,14, 15)).toBe(true)
+    expect(invalidMax(Number,14, true)).toBe(false)
   })
 
   test('returns true if input if less than min', () => {
-    expect(invalidMin(5, 'asdc')).toBe(true)
-    expect(invalidMin(2, 'as')).toBe(false)
-    expect(invalidMin(8, 'asd')).toBe(true)
-    expect(invalidMin(123, 123)).toBe(false)
-    expect(invalidMin(15, 14)).toBe(true)
-    expect(invalidMin(15, true)).toBe(false)
-    expect(invalidMin(2, '')).toBe(true)
+    expect(invalidMin(Number,5, 'asdc')).toBe(true)
+    expect(invalidMin(Number,2, 'as')).toBe(false)
+    expect(invalidMin(Number,8, 'asd')).toBe(true)
+    expect(invalidMin(Number,123, 123)).toBe(false)
+    expect(invalidMin(Number,15, 14)).toBe(true)
+    expect(invalidMin(Number,15, true)).toBe(true)
+    expect(invalidMin(String,2, '')).toBe(true)
   })
 
   test('returns true if the value of first parameter does not match the second parameter', () => {
