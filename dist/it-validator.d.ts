@@ -9,7 +9,7 @@ declare namespace Validator {
     type Rule = {
         ruleName: string;
         required?: boolean;
-        type?: Type;
+        type: Type;
         min?: number;
         max?: number;
         email?: boolean;
@@ -68,8 +68,8 @@ declare const invalidAlphaDash: (value?: any) => boolean;
 declare const invalidEmail: (value?: any) => boolean;
 declare const invalidIn: (haystack: Array<any>, value?: any) => boolean;
 declare const invalidRegex: (regex: RegExp, value?: any) => boolean;
-declare const invalidMax: (max: number, value?: any) => boolean;
-declare const invalidMin: (min: number, value?: any) => boolean;
+declare const invalidMax: (type: Validator.Type, max: number, value?: any) => boolean;
+declare const invalidMin: (type: Validator.Type, min: number, value?: any) => boolean;
 
 declare const validate: (sentValues: any, sentRules: Validator.Rules) => Promise<{
     err: any;
