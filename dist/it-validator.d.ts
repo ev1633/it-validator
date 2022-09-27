@@ -70,7 +70,9 @@ declare const invalidIn: (haystack: Array<any>, value?: any) => boolean;
 declare const invalidRegex: (regex: RegExp, value?: any) => boolean;
 declare const invalidMax: (type: Validator.Type, max: number, value?: any) => boolean;
 declare const invalidMin: (type: Validator.Type, min: number, value?: any) => boolean;
-declare const addError: (e: null | GenericObject, key: string, value: unknown) => GenericObject;
+declare const addError: (err: null | GenericObject, key: string, value: unknown) => {
+    [x: string]: unknown;
+};
 
 declare const validate: (sentValues: any, sentRules: Validator.Rules) => Promise<{
     err: any;

@@ -74,9 +74,8 @@ export const errorMessage = (message: string | Types.GenericObject | undefined, 
   return base
 }
 
-export const addError = (e: null | GenericObject, key: string, value:unknown) => {
-    let theErr = e;
-    if (!theErr) theErr = {};
-    theErr[key] = value;
-    return theErr;
-  };
+export const addError = (err: null | GenericObject, key: string, value:unknown) => {
+  if (!err) return {[key]: value};
+  const theValue = err[key] && typeof err[key] === 'object' && typeof value === 'object' ? {...err[key], ...value} : value
+  return {...err, [key]: theValue}
+};
