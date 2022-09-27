@@ -21,7 +21,7 @@ import {
   invalidEmail
 } from '../lib/functions'
 
-type rule = boolean | null | undefined
+declare type rule = boolean | null | undefined
 
 const execIfPresent = (rule: rule, hof: Function) => {
   if (!rule) return () => false

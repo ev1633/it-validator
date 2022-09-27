@@ -70,10 +70,11 @@ declare const invalidIn: (haystack: Array<any>, value?: any) => boolean;
 declare const invalidRegex: (regex: RegExp, value?: any) => boolean;
 declare const invalidMax: (type: Validator.Type, max: number, value?: any) => boolean;
 declare const invalidMin: (type: Validator.Type, min: number, value?: any) => boolean;
+declare const addError: (e: null | GenericObject, key: string, value: unknown) => GenericObject;
 
 declare const validate: (sentValues: any, sentRules: Validator.Rules) => Promise<{
     err: any;
     values: any;
 }>;
 
-export { index as Types, hasValue, invalidAlpha, invalidAlphaDash, invalidAlphaNum, invalidArray, invalidBoolean, invalidDate, invalidEmail, invalidIn, invalidMax, invalidMin, invalidNumber, invalidObject, invalidRegex, invalidString, invalidType, sanitize, trim, validate };
+export { index as Types, addError, hasValue, invalidAlpha, invalidAlphaDash, invalidAlphaNum, invalidArray, invalidBoolean, invalidDate, invalidEmail, invalidIn, invalidMax, invalidMin, invalidNumber, invalidObject, invalidRegex, invalidString, invalidType, sanitize, trim, validate };

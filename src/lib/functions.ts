@@ -7,6 +7,7 @@ const invalidAlphaRegex = /^[a-zA-Z\s]+$/
 const invalidAlphaNumRegex = /^[0-9a-zA-Z\s]+$/
 const invalidAlphaDashRegex = /^[0-9a-zA-Z\s-_]+$/
 const invalidEmailRegex = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
+
 export const hasValue = (value: any = null): boolean => {
   if (typeof value === 'string')
     value = value.replace(hasValueRegex, "").length ? value : null
@@ -73,3 +74,9 @@ export const errorMessage = (message: string | Types.GenericObject | undefined, 
   return base
 }
 
+export const addError = (e: null | GenericObject, key: string, value:unknown) => {
+    let theErr = e;
+    if (!theErr) theErr = {};
+    theErr[key] = value;
+    return theErr;
+  };

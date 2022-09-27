@@ -1,13 +1,15 @@
 {
+  "root": true,
   "env": {
     "node": true,
-    "commonjs": true,
     "es2021": true
   },
   "extends": ["prettier", "eslint:recommended"],
   "plugins": ["prettier"],
   "parserOptions": {
-    "ecmaVersion": 12
+    "ecmaVersion": 12,
+    "project": "./tsconfig.eslint.json",
+    "sourceType": "module"
   },
   "rules": {
     "no-console": "off",
@@ -18,18 +20,6 @@
     "no-duplicate-imports": 2,
     "function-call-argument-newline": ["error", "consistent"],
     "linebreak-style": ["error", "unix"],
-    // "prettier/prettier": [
-    //   "warn",
-    //   {}
-    // ],
-    // "indent": [
-    //   "error",
-    //   2
-    // ],
-    // "space-before-function-paren": [
-    //   "error",
-    //   "never"
-    // ],
     "no-useless-concat": "error"
   }
 }

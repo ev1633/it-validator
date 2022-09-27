@@ -21,7 +21,8 @@ import {
   invalidAlpha,
   invalidAlphaNum,
   invalidAlphaDash,
-  invalidEmail
+  invalidEmail,
+  addError
 } from './lib/functions'
 
 import { loop } from './lib/main'
@@ -62,6 +63,7 @@ export {
   invalidAlphaNum,
   invalidAlphaDash,
   invalidEmail,
+  addError,
   Types
 }
 

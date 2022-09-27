@@ -27,7 +27,8 @@
     "test": "jest",
     "dev": "NODE_ENV=development nodemon",
     "prebuild": "rimraf ./dist && jest",
-    "build": "rollup -c"
+    "build": "rollup -c",
+    "lint": "eslint ./src/* --ext .ts"
   },
   "author": "Ezequiel Vergara",
   "license": "MIT",
