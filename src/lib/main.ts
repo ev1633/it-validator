@@ -1,7 +1,7 @@
 import * as Types from '../@types/common'
 import { sanitize, trim } from '../lib/clean'
  
-import { invalidType } from '../lib/types'
+import { invalidType, convert } from '../lib/types'
 
 import {
   hasValue,
@@ -18,7 +18,7 @@ import {
   invalidAlpha,
   invalidAlphaNum,
   invalidAlphaDash,
-  invalidEmail
+  invalidEmail,
 } from '../lib/functions'
 
 declare type rule = boolean | null | undefined
@@ -110,8 +110,9 @@ export const validateField = async (values: Types.GenericObject, rule: Types.Val
 
     if (invalidType({ ...rule, type: Number }, value) && !invalidType({ ...rule, type: String }, value))
       value = decodeURI(value)
-  }
 
+    value = execIfPresent(!!rule.convert, convert)(rule.convert === true ? rule.type : rule.convert, value) || value
+  }
   return { err: null, value }
 }
 

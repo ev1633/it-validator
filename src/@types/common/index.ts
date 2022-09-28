@@ -1,10 +1,12 @@
-export type GenericObject = { [key: string]: any }
+export declare type GenericObject = { [key: string]: any }
 export namespace Validator {
-  export type Type = Number | Date | Array<any> | Object | String | Boolean
+  export declare type Type = Number | Date | ArrayConstructor | Object | String | Boolean
 
-  export type Rules = (v: any) => { [key: string]: any }
+  export declare type Rules = (v: any) => { [key: string]: any }
 
-  export type Rule = {
+  export declare type Convert = boolean | Type
+
+  export declare type Rule = {
     ruleName: string
     required?: boolean,
     type: Type,
@@ -26,6 +28,7 @@ export namespace Validator {
     defaultAfterValidate?: any,
     children?: [] | GenericObject,
     clean?: { sanitize?: boolean, trim?: boolean },
-    message?: string
+    message?: string,
+    convert?: Convert
   } | null
 }

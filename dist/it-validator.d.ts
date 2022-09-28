@@ -2,10 +2,11 @@ declare type GenericObject = {
     [key: string]: any;
 };
 declare namespace Validator {
-    type Type = Number | Date | Array<any> | Object | String | Boolean;
+    type Type = Number | Date | ArrayConstructor | Object | String | Boolean;
     type Rules = (v: any) => {
         [key: string]: any;
     };
+    type Convert = boolean | Type;
     type Rule = {
         ruleName: string;
         required?: boolean;
@@ -32,6 +33,7 @@ declare namespace Validator {
             trim?: boolean;
         };
         message?: string;
+        convert?: Convert;
     } | null;
 }
 
@@ -49,9 +51,9 @@ declare const trim: (string: string) => string;
 
 declare const invalidNumber: (value: any) => boolean;
 declare const invalidDate: (value: any) => boolean;
-declare const invalidArray: (value: any) => boolean;
+declare const invalidArray: (value: unknown) => boolean;
 declare const invalidObject: (value: any) => boolean;
-declare const invalidString: (value: any) => boolean;
+declare const invalidString: (value: unknown) => boolean;
 declare const invalidBoolean: (value: any) => boolean;
 /**
   * check type and execute validating function

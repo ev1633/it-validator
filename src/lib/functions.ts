@@ -13,6 +13,7 @@ export const hasValue = (value: any = null): boolean => {
     value = value.replace(hasValueRegex, "").length ? value : null
   return (typeof value !== 'undefined' && value !== null)
 }
+
 export const invalidAlpha = (value: any = undefined): boolean => {
   if (!value || !(typeof value === 'string')) return true
   return !invalidAlphaRegex.test(value)
@@ -32,29 +33,37 @@ export const invalidEmail = (value: any = undefined): boolean => {
   if (!value || !(typeof value === 'string')) return true
   return !invalidEmailRegex.test(value)
 }
+
 export const invalidIn = (haystack: Array<any>, value: any = undefined): boolean => {
   if (!haystack.length || !(haystack instanceof Array)) return true
   return !haystack.includes(value)
 }
+
 export const invalidRegex = (regex: RegExp, value: any = undefined): boolean => {
   if (value instanceof Date) value = value.toISOString()
   return !(regex).test(String(value))
 }
+
 export const invalidMax = (type:Types.Validator.Type, max:number, value: any = undefined): boolean => {
   return (type === Number && Number(value) > max) || (value.length > max)
 }
+
 export const invalidMin = (type:Types.Validator.Type, min:number, value: any = undefined): boolean => {
   return (type === Number && Number(value) < min) || (value.length < min)
 }
+
 export const invalidRequiredIf = (rule: [string, any], values: GenericObject, value: any = undefined): boolean => {
   return rule.length !== 2 || !(rule[0] in values) || (values[rule[0]] === rule[1] && !hasValue(value))
 }
+
 export const invalidRequiredUnless = (rule: [string, any], values: GenericObject, value: any = undefined): boolean => {
   return rule.length !== 2 || !(rule[0] in values) || (values[rule[0]] !== rule[1] && !hasValue(value))
 }
+
 export const invalidRequiredWith = (rule: string[], values: any, value: any = undefined): boolean => {
   return !hasValue(value) && rule.some(item => item in values && hasValue(values[item]))
 }
+
 export const invalidRequiredWithout = (rule: string[], values: any, value: any = undefined): boolean => {
   return !hasValue(value) && rule.some(item => !(item in values) || !hasValue(values[item]))
 }
@@ -78,4 +87,5 @@ export const addError = (err: null | GenericObject, key: string, value:unknown) 
   if (!err) return {[key]: value};
   const theValue = err[key] && typeof err[key] === 'object' && typeof value === 'object' ? {...err[key], ...value} : value
   return {...err, [key]: theValue}
-};
+}
+
