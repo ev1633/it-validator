@@ -48,7 +48,7 @@ export const invalidType = (type: Types.Validator.Type | undefined, value: any):
   }
 }
 
-const convertToArray = (value: string) => {
+export const convertToArray = (value: string) => {
   if(invalidString(value)) return value
   const theValue = value as string
   if (!theValue.includes(',')) return [theValue];

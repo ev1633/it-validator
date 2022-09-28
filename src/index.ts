@@ -9,7 +9,8 @@ import {
   invalidDate,
   invalidArray,
   invalidObject,
-  invalidString
+  invalidString,
+  convertToArray
 } from './lib/types'
 
 import {
@@ -63,6 +64,7 @@ export {
   invalidAlphaNum,
   invalidAlphaDash,
   invalidEmail,
+  convertToArray,
   addError,
   Types
 }

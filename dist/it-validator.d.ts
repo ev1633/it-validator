@@ -62,6 +62,7 @@ declare const invalidBoolean: (value: any) => boolean;
   * @return { object }
   */
 declare const invalidType: (type: Validator.Type | undefined, value: any) => boolean | string;
+declare const convertToArray: (value: string) => string | string[];
 
 declare const hasValue: (value?: any) => boolean;
 declare const invalidAlpha: (value?: any) => boolean;
@@ -81,4 +82,4 @@ declare const validate: (sentValues: any, sentRules: Validator.Rules) => Promise
     values: any;
 }>;
 
-export { index as Types, addError, hasValue, invalidAlpha, invalidAlphaDash, invalidAlphaNum, invalidArray, invalidBoolean, invalidDate, invalidEmail, invalidIn, invalidMax, invalidMin, invalidNumber, invalidObject, invalidRegex, invalidString, invalidType, sanitize, trim, validate };
+export { index as Types, addError, convertToArray, hasValue, invalidAlpha, invalidAlphaDash, invalidAlphaNum, invalidArray, invalidBoolean, invalidDate, invalidEmail, invalidIn, invalidMax, invalidMin, invalidNumber, invalidObject, invalidRegex, invalidString, invalidType, sanitize, trim, validate };
