@@ -184,11 +184,11 @@ export const loop = async (values: Types.GenericObject, rules: Types.GenericObje
         for (const i in validateValue) {
 
           const arrRes = await loop(validateValue[i], rule.children)
-
           if (arrRes.err) arrErr[i] = arrRes.err
           else validateArr.push(arrRes.values)
         }
-        err = arrErr
+
+        err = Object.keys(arrErr).length ? arrErr : null 
         if (err) errors[ruleName] = err
         validateValue = validateArr
         // console.log({ validateArr, arrErr })
@@ -199,10 +199,9 @@ export const loop = async (values: Types.GenericObject, rules: Types.GenericObje
         err = objRes.err
         if (err) errors[ruleName] = err
         validateValue = objRes.values
-
       }
     }
-
+     console.log({ validateValue, err })
     if (!err && validateValue !== undefined) {
       validValues[ruleName] = validateValue
       values[ruleName] = validateValue
