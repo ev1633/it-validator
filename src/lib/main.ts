@@ -201,7 +201,7 @@ export const loop = async (values: Types.GenericObject, rules: Types.GenericObje
         validateValue = objRes.values
       }
     }
-     console.log({ validateValue, err })
+    //  console.log({ validateValue, err })
     if (!err && validateValue !== undefined) {
       validValues[ruleName] = validateValue
       values[ruleName] = validateValue
