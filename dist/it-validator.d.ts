@@ -46,8 +46,8 @@ declare namespace index {
   };
 }
 
-declare const sanitize: (string: string) => string;
-declare const trim: (string: string) => string;
+declare const sanitize: (value: string) => string;
+declare const trim: (value: string) => string;
 
 declare const invalidNumber: (value: any) => boolean;
 declare const invalidDate: (value: any) => boolean;

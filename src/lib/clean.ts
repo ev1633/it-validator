@@ -1,5 +1,6 @@
 import * as Types from '../@types/common'
-export const sanitize = (string: string) => {
+export const sanitize = (value: string) => {
+  if (typeof value !== 'string') return value
   const map: Types.GenericObject = {
     '&': '&amp;',
     '<': '&lt;',
@@ -9,9 +10,10 @@ export const sanitize = (string: string) => {
     "/": '&#x2F;',
   };
   const reg = /[&<>"'/]/ig;
-  return string.replace(reg, (match) => (map[match]));
+  return value.replace(reg, (match) => (map[match]));
 }
 
-export const trim = (string: string) => {
-  return string.trim()
+export const trim = (value: string) => {
+  if (typeof value !== 'string') return value
+  return value.trim()
 }

@@ -44,11 +44,11 @@ export const invalidRegex = (regex: RegExp, value: any = undefined): boolean => 
   return !(regex).test(String(value))
 }
 
-export const invalidMax = (type:Types.Validator.Type, max:number, value: any = undefined): boolean => {
+export const invalidMax = (type: Types.Validator.Type, max: number, value: any = undefined): boolean => {
   return (type === Number && Number(value) > max) || (value.length > max)
 }
 
-export const invalidMin = (type:Types.Validator.Type, min:number, value: any = undefined): boolean => {
+export const invalidMin = (type: Types.Validator.Type, min: number, value: any = undefined): boolean => {
   return (type === Number && Number(value) < min) || (value.length < min)
 }
 
@@ -83,9 +83,9 @@ export const errorMessage = (message: string | Types.GenericObject | undefined, 
   return base
 }
 
-export const addError = (err: null | GenericObject, key: string, value:unknown) => {
-  if (!err) return {[key]: value};
-  const theValue = err[key] && typeof err[key] === 'object' && typeof value === 'object' ? {...err[key], ...value} : value
-  return {...err, [key]: theValue}
+export const addError = (err: null | GenericObject, key: string, value: unknown) => {
+  if (!err) return { [key]: value };
+  const theValue = err[key] && typeof err[key] === 'object' && typeof value === 'object' ? { ...err[key], ...value } : value
+  return { ...err, [key]: theValue }
 }
 
