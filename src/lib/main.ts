@@ -1,6 +1,6 @@
 import * as Types from '../@types/common'
 import { sanitize, trim } from '../lib/clean'
- 
+
 import { invalidType, convert } from '../lib/types'
 
 import {
@@ -35,11 +35,13 @@ const execIfPresent = (rule: rule, hof: Function) => {
 export const validateField = async (values: Types.GenericObject, rule: Types.Validator.Rule): Promise<any> => {
 
   if (!rule) return { err: null, value: undefined }
-  if(!rule.type) throw new Error(`${rule.ruleName} must have a type property specified`)
+  if (!rule.type) throw new Error(`${rule.ruleName} must have a type property specified`)
   let value = values[rule.ruleName]
 
   if (rule.required && !hasValue(value))
     return { err: errorMessage(rule.message, 'required', 'is required'), value }
+
+  value = execIfPresent(!!rule.convert, convert)(rule.convert === true ? rule.type : rule.convert, value) || value
 
   if (rule.ruleName in values && values[rule.ruleName] !== undefined) {
     const notValidType = invalidType(rule.type, value)
@@ -111,7 +113,7 @@ export const validateField = async (values: Types.GenericObject, rule: Types.Val
     if (invalidType({ ...rule, type: Number }, value) && !invalidType({ ...rule, type: String }, value))
       value = decodeURI(value)
 
-    value = execIfPresent(!!rule.convert, convert)(rule.convert === true ? rule.type : rule.convert, value) || value
+
   }
   return { err: null, value }
 }
@@ -188,7 +190,7 @@ export const loop = async (values: Types.GenericObject, rules: Types.GenericObje
           else validateArr.push(arrRes.values)
         }
 
-        err = Object.keys(arrErr).length ? arrErr : null 
+        err = Object.keys(arrErr).length ? arrErr : null
         if (err) errors[ruleName] = err
         validateValue = validateArr
         // console.log({ validateArr, arrErr })
