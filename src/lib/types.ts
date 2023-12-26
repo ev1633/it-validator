@@ -49,24 +49,29 @@ export const invalidType = (type: Types.Validator.Type | undefined, value: any):
 }
 
 export const convertToArray = (value: string) => {
-  if(invalidString(value)) return value
+  if (invalidString(value)) return value
   const theValue = value as string
   if (!theValue.includes(',')) return [theValue];
   return theValue.split(',').map((item) => item.trim());
 };
 
 export const convert = (type: Types.Validator.Convert, value: unknown) => {
-  switch (type) {
-    case Number:
-      return Number(value)
-    case Array:
-      return convertToArray(value as string)
-    case Boolean:
-      return !!value
-    case String:
-      return `${value}`
-    default:
-      return false
+  try {
+    switch (type) {
+      case Number:
+        return Number(value)
+      case Array:
+        return convertToArray(value as string)
+      case Boolean:
+        return !!value
+      case String:
+        return `${value}`
+      default:
+        return false
+    }
+  } catch (_) {
+    return value
   }
+
 
 }
