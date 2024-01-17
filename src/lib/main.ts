@@ -41,7 +41,7 @@ export const validateField = async (values: Types.GenericObject, rule: Types.Val
   if (rule.required && !hasValue(value))
     return { err: errorMessage(rule.message, 'required', 'is required'), value }
 
-  if (rule.convert) value = convert(rule.convert === true ? rule.type : rule.convert || false, value)
+  if (value !== null && value !== undefined && rule.convert) value = convert(rule.convert === true ? rule.type : rule.convert || false, value)
 
   if (rule.ruleName in values && values[rule.ruleName] !== undefined) {
     const notValidType = invalidType(rule.type, value)
