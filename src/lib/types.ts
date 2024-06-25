@@ -63,6 +63,7 @@ export const convert = (type: Types.Validator.Convert, value: unknown) => {
       case Array:
         return convertToArray(value as string)
       case Boolean:
+        if(value === 'false' || value === '0') return false
         return !!value
       case String:
         return `${value}`
