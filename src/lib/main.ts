@@ -102,10 +102,10 @@ export const validateField = async (values: Types.GenericObject, rule: Types.Val
 
     if (rule.clean) {
 
-      if (rule.clean === true || rule.clean.trim)
+      if (rule.clean.trim)
         value = trim(value)
 
-      if (rule.clean === true || rule.clean.sanitize)
+      if (rule.clean.sanitize)
         value = sanitize(value)
 
     }

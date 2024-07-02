@@ -1,10 +1,17 @@
 import * as Types from '../@types/common'
 
 export const invalidNumber = (value: any): boolean => {
-  return !(!isNaN(value) || typeof value === "number" || value instanceof Number)
+  console.log({
+    value,
+    isNaN: isNaN(value), 
+    typeof:typeof value === "number",
+    instanceof: value instanceof Number,
+    comb:typeof value === "number" || value instanceof Number
+  })
+  return !Number.isFinite(+value)// || !(typeof value === "number" || value instanceof Number)
 }
 export const invalidDate = (value: any): boolean => {
-  return !(!isNaN(Date.parse(value)) || value instanceof Date)
+  return !(!isNaN(Date.parse(value)) || value instanceof Date) 
 }
 export const invalidArray = (value: unknown): boolean => {
   return !(value instanceof Array)

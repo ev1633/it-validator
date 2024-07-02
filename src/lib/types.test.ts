@@ -14,7 +14,7 @@ describe('individual types', () => {
     expect(invalidNumber(false)).toBe(false)
     expect(invalidNumber(true)).toBe(false)
     expect(invalidNumber(undefined)).toBe(true)
-  })
+  }) 
 
   test('returns true if input is not a string', () => {
     expect(invalidString('s')).toBe(false)
