@@ -50,6 +50,7 @@ export const invalidType = (type: Types.Validator.Type | undefined, value: any):
 
 export const convertToArray = (value: string) => {
   if (invalidString(value)) return value
+  if(!value) return []
   const theValue = value as string
   if (!theValue.includes(',')) return [theValue];
   return theValue.split(',').map((item) => item.trim());
